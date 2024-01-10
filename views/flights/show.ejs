@@ -1,39 +1,60 @@
 <%- include('../partials/header') %>
 
-<h2>Add Destination</h2>
-<form id="add-destinaion-form" method="POST"
-  action="/flights/<%= flight._id %>/reviews">
-  <label>Destinaion:</label>
-  <textarea name="content"></textarea>
+<h2>Flight Details</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Airline</th>
+      <th>Airport</th>
+      <th>Flight Number</th>
+      <th>Departure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= flight.airline %></td>
+      <td><%= flight.airport %></td>
+      <td><%= flight.flightNo %></td>
+      <td><%= flight.departs %></td>
+    </tr>
+  </tbody>
+</table>
+
+<form id="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
+  <label>Destination:</label>
+  <input type="text" name="airport" required>
+  
   <label>Arrival:</label>
-  <textarea name="date"></textarea>
+  <input type="date" name="arrival" required>
+
   <label>Airport Code:</label>
-  <select name="code">
+  <select name="code" required>
     <option value="1">AUS</option>
     <option value="2">DFW</option>
     <option value="3">DEN</option>
     <option value="4">LAX</option>
     <option value="5">SAN</option>
   </select>
-  <input type="submit" value="Add Destinaion">
+
+  <input type="submit" value="Add Destination">
 </form>
 
 <% if (flight.destinations.length) { %>
+  <h3>Destinations:</h3>
   <table>
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Review</th>
-        <th>Rating</th>
+        <th>Destination</th>
+        <th>Arrival</th>
+        <th>Airport Code</th>
       </tr>
     </thead>
     <tbody>
       <% flight.destinations.forEach(function(d) { %>
         <tr>
-          <!-- .toLocaleDateString() provides a more friendly date format -->
-          <td><%= d.createdAt.toLocaleDateString() %></td>
-          <td><%= d.content %></td>
-          <td><%= d.rating %></td>
+          <td><%= d.airport %></td>
+          <td><%= d.arrival.toLocaleDateString() %></td>
+          <td><%= d.code %></td>
         </tr>
       <% }); %>
     </tbody>
@@ -41,5 +62,5 @@
 <% } else { %>
   <h5>No Destinations Yet</h5>
 <% } %>
-  
+
 <%- include('../partials/footer') %>

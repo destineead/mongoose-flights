@@ -1,4 +1,4 @@
-const Destination = require('../models/flight');
+const Flight = require('../models/flight');
 
 module.exports = {
   create
@@ -9,7 +9,7 @@ async function create(req, res) {
   // We can push (or unshift) subdocs into Mongoose arrays
   flight.destinations.push(req.body);
   try {
-    // Save any changes made to the movie doc
+    // Save any changes made to the flight doc
     await flight.save();
   } catch (err) {
     console.log(err);
