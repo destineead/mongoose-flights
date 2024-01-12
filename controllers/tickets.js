@@ -7,14 +7,18 @@ module.exports = {
 };
 
 async function create(req, res) {
+  const flightId = req.params.id;
+  req.body.flight = flightId;
   try {
-    await flight.save();
+    const ticket = await Ticket.create(req.body);
+    await ticket.save();
   } catch (err) {
     console.log(err);
   }
-  res.redirect(`/flights/${flight._id}`);
+  res.redirect(`/flights/${flightId}`);
 }
 
 async function newTicket(req, res) {
-  res.render('tickets/new', { title: 'New Ticket', flightId: req.params.flightId });
+  console.log(req.params.id)
+  res.render('tickets/new', { title: 'New Ticket', flightId: req.params.id });
 }
